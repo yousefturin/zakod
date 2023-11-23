@@ -1,0 +1,87 @@
+.atbash-container{
+    padding: 4rem;
+    background: #fff;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    margin-bottom: 48px;
+}
+
+.atbash-container p{
+    padding: 1rem 0;
+    font-size: 21px;
+    text-decoration: none;
+    text-align: left;
+    letter-spacing: 0.1cqb;
+    padding-left: 0.5rem;
+}
+
+.image-display{
+    /* width: 60%; */
+    max-width: 80%;
+    height: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    padding: 40px 0 20px 0px;
+}
+
+.atbash-container h2{
+    /* padding: 1rem 0; */
+    font-size: 24px;
+    text-decoration: none;
+    text-align: left;
+    align-self: flex-start;
+    margin-top: 58px;
+}
+.atbash-text-box{
+    padding: 2em;
+    width: 100%;
+    background-color: #f9f9f9;
+    border-radius: 2px;
+    padding-left: 2rem;
+}
+.atbash-text{
+    font-family: monospace;
+    padding: 0 !important;
+}
+
+
+@media screen and (max-width: 960px){
+    .atbash-container{
+        padding: 2rem;
+    }
+    .atbash-container  p {
+        font-size: 18px;
+    }
+    .image-display{
+        width:60%;
+    }
+    .atbash-container h2{
+        font-size: 20px;
+    }
+    .atbash{
+        font-size:70px !important;;
+        margin-top: -150px;
+    }
+}
+
+
+@media screen and (max-width: 768px){
+    .atbash-container{
+        padding: 1.5rem;
+    }
+    .atbash-container  p {
+        font-size: 16px;
+    }
+    .image-display{
+        width:60%;
+    }
+    .atbash-container h2{
+        font-size: 18px;
+    }
+    .atbash{
+        font-size:50px !important;
+        margin-top: -150px;
+    }
+
+}

@@ -1,38 +1,122 @@
-.App {
-  text-align: center;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", Montserrat;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  overflow-y: scroll;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body::-webkit-scrollbar {
+  width: 0em;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+body::-webkit-scrollbar-thumb {
+  background-color: #888;
+}
+
+body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.home,
+.cryptography,
+.information,
+.sign-up,
+.affine,
+.atbash,
+.caesar {
   display: flex;
-  flex-direction: column;
+  height: 92vh;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  font-size: 3rem;
 }
 
-.App-link {
-  color: #61dafb;
+.cryptography {
+  background-image: url("/public/images/image-12.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fefffe;
+  font-size: 100px;
+  background-color: #262626;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.information {
+  background-image: url("/public/images/image-1.jpg");
+  background-position: center;
+  background-size: fill;
+  background-repeat: no-repeat;
+  color: #fefffe;
+  font-size: 100px;
+  background-color: #262626;
+}
+
+.sign-up {
+  background-image: url("/public/images/image-4.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fefffe;
+  font-size: 100px;
+  background-color: #262626;
+}
+
+.affine {
+  background-image: url("/public/images/image-8.jpg");
+  background-position: center;
+  background-size: fill;
+  background-repeat: no-repeat;
+  color: #fefffe;
+  font-size: 100px;
+  background-color: #262626;
+}
+
+.atbash {
+  background-image: url("/public/images/image-16.jpg");
+  background-position: center;
+  background-size: fill;
+  background-repeat: no-repeat;
+  color: #fefffe;
+  font-size: 100px;
+  background-color: #262626;
+}
+
+.caesar {
+  background-image: url("/public/images/image-10.jpg");
+  background-position: center;
+  background-size: fill;
+  background-repeat: no-repeat;
+  color: #fefffe;
+  font-size: 100px;
+  background-color: #262626;
+}
+
+@media screen and (max-width: 960px) {
+
+  .information,
+  .sign-up,
+  .cryptography,
+  .caesar,
+  .atbash,
+  .affine {
+    font-size: 70px !important;
+    margin-top: -150px;
   }
-  to {
-    transform: rotate(360deg);
+}
+
+@media screen and (max-width: 768px) {
+
+  .information,
+  .sign-up,
+  .cryptography,
+  .caesar,
+  .atbash,
+  .affine {
+    font-size: 50px !important;
+    margin-top: -150px;
   }
 }
