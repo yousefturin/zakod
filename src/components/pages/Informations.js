@@ -14,7 +14,10 @@ export default function Information() {
                     loop
                     muted
                 />
+                
                 <h1>Blogs</h1>
+                <h4>Unlocking Secrets : Delve into the Fascinating World of Cryptography</h4>
+                
             </div>
             <IntroDisplay />
             <Cards />

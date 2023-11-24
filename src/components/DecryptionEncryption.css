@@ -1,0 +1,167 @@
+.Dec-Enc-container {
+  max-width: 600px;
+  margin: auto;
+  width: 400px;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.Dec-Enc-container div {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+textarea,
+input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+/* Style for the select element */
+select {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: white;
+  cursor: pointer;
+}
+
+/* Style for the arrow icon of the select element */
+select::after {
+  content: "\25BC"; /* Unicode character for a down arrow */
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* Style for the select options */
+select option {
+  background-color: white;
+  color: #333;
+}
+
+div label {
+  display: inline-block;
+}
+
+/* Ensure the keys input fields have a consistent width */
+.Dec-Enc-container .keys input {
+  width: 100%;
+}
+
+button {
+  background-color: #255f64;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #122e30;
+}
+
+textarea {
+  width: 100%;
+  height: 80px;
+  padding: 8px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
+  /* Prevent resizing */
+}
+
+input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #122e30;
+  border-radius: 50%;
+  outline: none;
+  margin: 0;
+  /* Reset margin */
+  margin-right: 5px;
+  /* Add space between radio button and text */
+  vertical-align: middle;
+  /* Align vertically with label text */
+  cursor: pointer;
+}
+
+/* Custom styling for checked state */
+input[type="radio"]:checked {
+  background-color: #122e30;
+}
+
+/* Styling for label text */
+label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+/* Additional styling for label text */
+label span {
+  margin-left: 5px;
+}
+
+/* Hide default radio button */
+input[type="radio"]::-ms-check {
+  display: none;
+}
+
+.logo-display-powered {
+  width: 20px;
+  height: 20px;
+}
+
+.powered-by-zakod-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.custom-alert {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #cf4339; /* Red color, you can customize this */
+  color: white;
+  text-align: center;
+  padding: 15px;
+  z-index: 1000;
+  animation: fadeInOut 3.5s ease-in-out forwards;
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+      opacity: 0;
+  }
+  10%, 90% {
+      opacity: 1;
+  }
+}

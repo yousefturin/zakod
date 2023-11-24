@@ -172,6 +172,7 @@ function IntroDisplay() {
                     use strong encryption algorithms, to avoid any catastrophic
                     situations.{" "}
                 </p>
+                <hr />
             </div>
         </>
     );

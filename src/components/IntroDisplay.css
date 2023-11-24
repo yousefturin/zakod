@@ -34,3 +34,8 @@
     align-self: flex-start;
     margin-top: 58px;
 }
+hr {
+    width: 100%;
+    border: 1px solid #e6e4e4; /* Set the border style and color */
+    margin: 20px 0; /* Adjust margin as needed */
+  }

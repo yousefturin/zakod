@@ -4,9 +4,11 @@
   padding: 0;
   font-family: "Montserrat", Montserrat;
 }
+
 html {
   scroll-behavior: smooth;
 }
+
 body {
   overflow-y: scroll;
 }
@@ -16,7 +18,7 @@ body::-webkit-scrollbar {
 }
 
 body::-webkit-scrollbar-thumb {
-  background-color: #888;
+  background-color: #cfcdcd;
 }
 
 body::-webkit-scrollbar-track {
@@ -121,4 +123,12 @@ body::-webkit-scrollbar-track {
     font-size: 50px !important;
     margin-top: -150px;
   }
+}
+
+.info-display-exeption{
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
 }

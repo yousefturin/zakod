@@ -32,35 +32,59 @@ function Footer() {
             <div class="footer-links">
                 <div className="footer-link-wrapper">
                     <div class="footer-link-items">
-                        <h2>About Us</h2>
-                        <Link to="/sign-up">How it works</Link>
-                        <Link to="/">Testimonials</Link>
+                        <h2>Company</h2>
+                        <Link to="/">About Us</Link>
+                        <Link to="/">Legal</Link>
                         <Link to="/">Careers</Link>
-                        <Link to="/">Investors</Link>
+                        <Link to="/">Terms & Conditions</Link>
                         <Link to="/">Terms of Service</Link>
                     </div>
                     <div class="footer-link-items">
                         <h2>Contact Us</h2>
                         <Link to="/">Contact</Link>
                         <Link to="/">Support</Link>
-                        <Link to="/">Destinations</Link>
-                        <Link to="/">Sponsorships</Link>
+                        <Link to="/">Advertise with us</Link>
+                        <Link to="/">Apply for Mentor</Link>
                     </div>
                 </div>
                 <div className="footer-link-wrapper">
                     <div class="footer-link-items">
-                        <h2>Videos</h2>
-                        <Link to="/">Submit Video</Link>
-                        <Link to="/">Ambassadors</Link>
-                        <Link to="/">Agency</Link>
-                        <Link to="/">Influencer</Link>
+                        <h2>Blogs</h2>
+                        <Link to="/information/atbash">Atbash Cipher</Link>
+                        <Link to="/information/caesar">Caesar Cipher</Link>
+                        <Link to="/information/affine">Affine Cipher</Link>
+                        <Link to="/">Hill Cipher</Link>
                     </div>
                     <div class="footer-link-items">
                         <h2>Social Media</h2>
-                        <Link to="/">Instagram</Link>
-                        <Link to="/">Facebook</Link>
-                        <Link to="/">Youtube</Link>
-                        <Link to="/">Twitter</Link>
+                        <Link
+                            to="https://www.instagram.com/yusefturin/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Instagram
+                        </Link>
+                        <Link
+                            to="https://www.facebook.com/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Facebook
+                        </Link>
+                        <Link
+                            to="https://www.youtube.com/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Youtube
+                        </Link>
+                        <Link
+                            to="https://twitter.com/yusefturin"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Twitter
+                        </Link>
                     </div>
                 </div>
             </div>
