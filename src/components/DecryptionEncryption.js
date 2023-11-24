@@ -2,6 +2,7 @@ import React from "react";
 import CustomAlert from "./utils/CustomAlert";
 import { useDecryptionEncryptionLogic } from "./utils/DecryptionEncryptionLogic";
 import "./DecryptionEncryption.css";
+import Select from "react-select";
 
 function DecryptionEncryption() {
     const {
@@ -20,6 +21,22 @@ function DecryptionEncryption() {
         handleProcess,
     } = useDecryptionEncryptionLogic();
 
+    // Define options for the dropdown
+    const cipherOptions = [
+        { value: "atbash", label: "Atbash" },
+        { value: "affine", label: "Affine" },
+        { value: "caesar", label: "Caesar" },
+    ];
+    const theme = (theme) => ({
+        ...theme,
+        colors: {
+            ...theme.colors,
+            primary25: "#bad9db",
+            primary: "#255f64",
+            controlHeight: 20,
+            primary50: "#a9c5c7",
+        },
+    });
     return (
         <>
             {customAlert && <CustomAlert message={customAlert} />}
@@ -27,11 +44,13 @@ function DecryptionEncryption() {
                 <div>
                     <label htmlFor="cipher">Select Cipher:</label>
                     <div class="custom-select">
-                        <select id="cipher" value={cipher} onChange={handleCipherChange}>
-                            <option value="atbash">Atbash</option>
-                            <option value="affine">Affine</option>
-                            <option value="caesar">Caesar</option>
-                        </select>
+                        <Select
+                            id="Select"
+                            value={{ value: cipher, label: cipher }}
+                            onChange={handleCipherChange}
+                            options={cipherOptions}
+                            theme={theme} // Apply custom styles
+                        />
                     </div>
                 </div>
 
@@ -71,7 +90,7 @@ function DecryptionEncryption() {
                             id="keyA"
                             value={keyA}
                             onChange={handleKeyAChange}
-                            placeholder="Enter a number between 0 and 25 (e.g., 12)"
+                            placeholder="Enter a co-prime number (e.g., 1, 5)"
                         />
                         <label htmlFor="keyB">Key B:</label>
                         <input
@@ -92,7 +111,7 @@ function DecryptionEncryption() {
                             id="keyA"
                             value={keyA}
                             onChange={handleKeyAChange}
-                            placeholder="a number Between (0-25) i.e. 12"
+                            placeholder="Enter a number between 0 and 25 (e.g., 12)"
                         />
                     </div>
                 )}

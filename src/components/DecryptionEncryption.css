@@ -9,8 +9,8 @@
 }
 
 .Dec-Enc-container div {
-  margin-bottom: 10px;
-  margin-top: 10px;
+  margin-bottom: 5px;
+  margin-top: 5px;
 }
 
 label {
@@ -28,6 +28,20 @@ input {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+/* Styles for textarea and input on hover */
+textarea:hover,
+input:hover {
+  border: 1px solid #a8a8a8;
+}
+
+/* Styles for textarea and input on focus */
+textarea:focus,
+input:focus{
+  outline: none; /* Remove the default focus outline */
+  border: 1px solid #255f64;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
 /* Style for the select element */
 select {
   width: 100%;
@@ -165,3 +179,7 @@ input[type="radio"]::-ms-check {
       opacity: 1;
   }
 }
+
+
+
+
