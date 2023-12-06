@@ -7,11 +7,10 @@ import { Link } from "react-router-dom";
 function DisplayScreen() {
     return (
         <div className="dispaly-container">
-            <video
-                src={process.env.PUBLIC_URL + "/videos/video-2.mp4"}
-                autoPlay
-                loop
-                muted
+            <img 
+            className="video-background"
+                src={process.env.PUBLIC_URL + "/videos/gif-1.gif"}
+                alt="video"
             />
             <h1> Cryptography</h1>
             <p>Secure your messages!</p>

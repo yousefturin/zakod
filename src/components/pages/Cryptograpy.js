@@ -7,12 +7,11 @@ export default function Cryptography() {
   return (
     <>
       <div className="dispaly-container">
-        <video
-          src={process.env.PUBLIC_URL + "/videos/video-4.mp4"}
-          autoPlay
-          loop
-          muted
-        />
+      <img 
+            className="video-background"
+                src={process.env.PUBLIC_URL + "/videos/gif-3.gif"}
+                alt="video"
+            />
         <h1 className="info-display-exeption">Cryptography</h1>
         <DecryptionEncryption />
       </div>
