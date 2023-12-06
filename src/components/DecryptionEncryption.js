@@ -7,26 +7,41 @@ import Select from "react-select";
 function DecryptionEncryption() {
     const {
         cipher,
+        language,
         text,
-        keyA,
-        keyB,
+        keyAffineA,
+        keyAffineB,
+        keyCaesar,
+        keyVigenère,
         output,
         isEncrypt,
         customAlert,
         handleCipherChange,
+        handleLanguageChange,
         handleTextChange,
         handleKeyAChange,
         handleKeyBChange,
+        handleKeyVigenèreChange,
+        handleKeyCaesarChange,
         handleModeChange,
         handleProcess,
     } = useDecryptionEncryptionLogic();
 
     // Define options for the dropdown
     const cipherOptions = [
-        { value: "atbash", label: "Atbash" },
-        { value: "affine", label: "Affine" },
-        { value: "caesar", label: "Caesar" },
+        { value: "Atbash", label: "Atbash" },
+        { value: "Affine", label: "Affine" },
+        { value: "Caesar", label: "Caesar" },
+        { value: "Vigenère", label: "Vigenère" },
     ];
+
+    const languageOptions = [
+        { value: "English", label: "English" },
+        { value: "Turkish", label: "Turkish" },
+        { value: "Arabic", label: "Arabic" },
+        { value: "Russian", label: "Russian" },
+    ];
+
     const theme = (theme) => ({
         ...theme,
         colors: {
@@ -36,7 +51,9 @@ function DecryptionEncryption() {
             controlHeight: 20,
             primary50: "#a9c5c7",
         },
-    });
+    });   
+
+
     return (
         <>
             {customAlert && <CustomAlert message={customAlert} />}
@@ -49,6 +66,18 @@ function DecryptionEncryption() {
                             value={{ value: cipher, label: cipher }}
                             onChange={handleCipherChange}
                             options={cipherOptions}
+                            theme={theme} // Apply custom styles
+                        />
+                    </div>
+                </div>
+                <div>
+                    <label htmlFor="Language">Select Language:</label>
+                    <div class="custom-select">
+                        <Select
+                            id="Select"
+                            value={{ value: language, label: language }}
+                            onChange={handleLanguageChange}
+                            options={languageOptions}
                             theme={theme} // Apply custom styles
                         />
                     </div>
@@ -74,7 +103,8 @@ function DecryptionEncryption() {
                                 e.key !== " " &&
                                 (charCode < 65 ||
                                     (charCode > 90 && charCode < 97) ||
-                                    charCode > 122)
+                                    charCode > 122) &&
+                                !e.key.match(/[\u0400-\u04FF\u0600-\u06FF\s]/) // Allow Arabic characters
                             ) {
                                 e.preventDefault();
                             }
@@ -82,36 +112,49 @@ function DecryptionEncryption() {
                     ></textarea>
                 </div>
 
-                {cipher === "affine" && (
+                {cipher === "Affine" && (
                     <div>
-                        <label htmlFor="keyA">Key A:</label>
+                        <label htmlFor="keyAffineA">Key A:</label>
                         <input
                             type="text"
-                            id="keyA"
-                            value={keyA}
+                            id="keyAffineA"
+                            value={keyAffineA}
                             onChange={handleKeyAChange}
                             placeholder="Enter a co-prime number (e.g., 1, 5)"
                         />
-                        <label htmlFor="keyB">Key B:</label>
+                        <label htmlFor="keyAffineB">Key B:</label>
                         <input
                             type="text"
-                            id="keyB"
-                            value={keyB}
+                            id="keyAffineB"
+                            value={keyAffineB}
                             onChange={handleKeyBChange}
-                            placeholder="Enter a number between 0 and 25 (e.g., 12)"
+                            placeholder="Enter a number (e.g., 12)"
                         />
                     </div>
                 )}
 
-                {cipher === "caesar" && (
+                {cipher === "Vigenère" && (
                     <div>
-                        <label htmlFor="keyA">Key A:</label>
+                        <label htmlFor="keyAffineA">Key Text:</label>
                         <input
                             type="text"
-                            id="keyA"
-                            value={keyA}
-                            onChange={handleKeyAChange}
-                            placeholder="Enter a number between 0 and 25 (e.g., 12)"
+                            id="keyAffineA"
+                            value={keyVigenère}
+                            onChange={handleKeyVigenèreChange}
+                            placeholder="Enter a text (e.g., HELLO)"
+                        />
+                    </div>
+                )}
+
+                {cipher === "Caesar" && (
+                    <div>
+                        <label htmlFor="keyAffineA">Key:</label>
+                        <input
+                            type="text"
+                            id="keyAffineA"
+                            value={keyCaesar}
+                            onChange={handleKeyCaesarChange}
+                            placeholder="Enter a number (e.g., 12)"
                         />
                     </div>
                 )}

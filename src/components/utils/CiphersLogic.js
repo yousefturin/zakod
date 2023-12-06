@@ -1,10 +1,34 @@
+
+/**
+ * Perform Atbash cipher encryption or decryption on the input text.
+ * @param {string} language - The value of language.
+ * @returns {string} - The processed language result.
+ */
+export const getAlphabet = (language) => {
+    switch (language) {
+        case 'English':
+            return 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        case 'Turkish':
+            return 'ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ';
+        case 'Arabic':
+            return 'ابتثجحخدذرزسشصضطظعغفقكلمنهوي';
+        case 'Russian':
+            return 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ';
+        default:
+            // Default to English alphabet
+            return 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    }
+
+};
+
+
 /**
  * Perform Atbash cipher encryption or decryption on the input text.
  * @param {string} inputText - The text to be encrypted or decrypted.
  * @returns {string} - The processed text.
  */
-export const AtbashCipher = (inputText) => {
-    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+export const AtbashCipher = (inputText, language) => {
+    const alphabet = getAlphabet(language);
     const reversedAlphabet = alphabet.split('').reverse().join('');
 
     /**
@@ -42,8 +66,8 @@ export const AtbashCipher = (inputText) => {
  * @param {boolean} isEncrypt - A flag indicating whether to encrypt (true) or decrypt (false).
  * @returns {string} - The processed text.
  */
-export const CaesarCipher = (inputText, shiftA, isEncrypt) => {
-    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+export const CaesarCipher = (inputText, shiftA, isEncrypt, language) => {
+    const alphabet = getAlphabet(language);
 
     /**
      * Transform an individual character based on Caesar cipher logic.
@@ -62,8 +86,8 @@ export const CaesarCipher = (inputText, shiftA, isEncrypt) => {
         if (index !== -1) {
             // Perform the Caesar cipher shift
             const shiftedIndex = isEncrypt
-                ? (index + shiftA + 26) % 26
-                : (index - shiftA + 26) % 26;
+                ? (index + shiftA +  getAlphabet(language).length) %  getAlphabet(language).length
+                : (index - shiftA + getAlphabet(language).length) %  getAlphabet(language).length;
             return isUpperCase ? alphabet[shiftedIndex] : alphabet[shiftedIndex].toLowerCase();
         }
 
@@ -85,8 +109,8 @@ export const CaesarCipher = (inputText, shiftA, isEncrypt) => {
  * @param {boolean} isEncrypt - A flag indicating whether to encrypt (true) or decrypt (false).
  * @returns {string} - The processed text.
  */
-export const AffineCipher = (inputText, shiftA, shiftB, isEncrypt) => {
-    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+export const AffineCipher = (inputText, shiftA, shiftB, isEncrypt, language) => {
+    const alphabet = getAlphabet(language);
 
     /**
      * Calculate the modular multiplicative inverse of a number.
@@ -116,8 +140,8 @@ export const AffineCipher = (inputText, shiftA, shiftB, isEncrypt) => {
         if (index !== -1) {
             // Perform the Affine cipher transformation
             const transformedIndex = isEncrypt
-                ? (shiftA * index + shiftB) % 26
-                : (modInverse(shiftA, 26) * (index - shiftB + 26)) % 26;
+                ? (shiftA * index + shiftB) % getAlphabet(language).length 
+                : (modInverse(shiftA, getAlphabet(language).length ) * (index - shiftB +  getAlphabet(language).length )) % getAlphabet(language).length ;
 
             return isUpperCase ? alphabet[transformedIndex] : alphabet[transformedIndex].toLowerCase();
         }
@@ -129,4 +153,57 @@ export const AffineCipher = (inputText, shiftA, shiftB, isEncrypt) => {
     // Map each character of the input text through the transformCharacter function
     // and then join the resulting array to form the processed text
     return inputText.split('').map(transformCharacter).join('');
+};
+
+
+
+
+/**
+ * Perform Vigenère cipher encryption or decryption on the input text.
+ * @param {string} inputText - The text to be encrypted or decrypted.
+ * @param {string} key - The key for the Vigenère cipher.
+ * @param {boolean} isEncrypt - A flag indicating whether to encrypt (true) or decrypt (false).
+ * @returns {string} - The processed text.
+ */
+export const VigenereCipher = (inputText, key, isEncrypt, language) => {
+    const alphabet = getAlphabet(language);
+
+    /**
+     * Transform an individual character based on Vigenère cipher logic.
+     * @param {string} char - The character to be transformed.
+     * @param {number} keyIndex - The index of the key character to use for transformation.
+     * @returns {string} - The transformed character.
+     */
+    const transformCharacter = (char, keyIndex) => {
+        const isUpperCase = char === char.toUpperCase();
+        const charIndex = alphabet.indexOf(char.toUpperCase());
+
+        if (charIndex !== -1) {
+            // Perform the Vigenère cipher transformation
+            const keyChar = key[keyIndex % key.length].toUpperCase();
+            const keyIndexInAlphabet = alphabet.indexOf(keyChar);
+
+            const transformedIndex = isEncrypt
+                ? (charIndex + keyIndexInAlphabet) % getAlphabet(language).length 
+                : (charIndex - keyIndexInAlphabet +  getAlphabet(language).length ) %  getAlphabet(language).length;
+
+            return isUpperCase ? alphabet[transformedIndex] : alphabet[transformedIndex].toLowerCase();
+        }
+
+        // Return non-alphabetic characters unchanged
+        return char;
+    };
+
+    let keyIndex = 0;
+
+    // Map each character of the input text through the transformCharacter function
+    // and then join the resulting array to form the processed text
+    return inputText.split('').map((char) => {
+        if (/^[a-zA-ZÇçĞğİıÖöŞşÜü\u0600-\u06FF\s]*$/.test(char)) {
+            const transformedChar = transformCharacter(char, keyIndex);
+            keyIndex++;
+            return transformedChar;
+        }
+        return char;
+    }).join('');
 };

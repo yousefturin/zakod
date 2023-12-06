@@ -1,7 +1,7 @@
 import { useState } from "react";
 // eslint-disable-next-line no-unused-vars
 import CustomAlert from "./CustomAlert";
-import { AtbashCipher, CaesarCipher, AffineCipher } from "./CiphersLogic";
+import { AtbashCipher, CaesarCipher, AffineCipher, VigenereCipher, getAlphabet } from "./CiphersLogic";
 
 /**
  * Check if two numbers are coprime.
@@ -17,10 +17,13 @@ const isCoprime = (a, b) => {
 };
 
 export const useDecryptionEncryptionLogic = () => {
-    const [cipher, setCipher] = useState("atbash");
+    const [cipher, setCipher] = useState("Atbash");
+    const [language, setLanguage] = useState("English");
     const [text, setText] = useState("");
-    const [keyA, setKeyA] = useState("");
-    const [keyB, setKeyB] = useState("");
+    const [keyAffineA, setKeyA] = useState("");
+    const [keyAffineB, setKeyB] = useState("");
+    const [keyCaesar, setKeyCaesar] = useState("");
+    const [keyVigenère, setKeyVigenère] = useState("");
     const [output, setOutput] = useState("");
     const [isEncrypt, setIsEncrypt] = useState(true);
 
@@ -44,10 +47,28 @@ export const useDecryptionEncryptionLogic = () => {
         }
     };
 
+    const handleLanguageChange = (selectedOption) => {
+        // Ensure that selectedOption is defined before accessing its value property
+        if (selectedOption && selectedOption.value) {
+            setLanguage(selectedOption.value);
+            setKeyA("");
+            setKeyCaesar("");
+            setKeyVigenère("");
+            setIsEncrypt(true);
+        } else {
+            // Handle the case where selectedOption is undefined or doesn't have a value property
+            // You can log an error or take appropriate action
+            console.error("Invalid selected option:", selectedOption);
+        }
+    };
+
     const handleTextChange = (e) => {
         const inputValue = e.target.value;
-        const regex = /^[a-zA-Z\s]*$/; // Include \s to allow spaces
+        
+        // Regular expression to allow English, Turkish, and Arabic letters, and spaces
+        const regex = /^[a-zA-ZÇçĞğİıÖöŞşÜü\u0400-\u04FF\u0600-\u06FF\s]*$/;
 
+    
         if (regex.test(inputValue)) {
             // Convert the input text to capital letters
             const capitalText = inputValue.toUpperCase();
@@ -64,27 +85,48 @@ export const useDecryptionEncryptionLogic = () => {
 
         // Ensure that value is a number and within the range [0, 25]
         const isValidInput =
-            !isNaN(value) && parseInt(value, 10) >= 0 && parseInt(value, 10) <= 25;
+            !isNaN(value) && parseInt(value, 10) >= 0 && parseInt(value, 10) <= getAlphabet(language).length;
 
         // Check if 'a' is co-prime with 26
-        const isCoPrimeWith26 = isValidInput && isCoprime(parseInt(value, 10), 26);
+        const isCoPrimeWith26 = isValidInput && isCoprime(parseInt(value, 10),getAlphabet(language).length);
 
         if (value === "" || (isValidInput && isCoPrimeWith26)) {
             setKeyA(value);
         } else {
             showAlert(
-                "Please enter a valid number between 0 and 25 that is coprime with 26."
-            );
+                `Please enter a valid number between 0 and ${[...getAlphabet(language)].length - 1} that is co-prime with ${[...getAlphabet(language)].length}.`
+                );
         }
     };
 
     const handleKeyBChange = (e) => {
         const value = e.target.value;
-        if (
-            value === "" ||
-            (!isNaN(value) && parseInt(value, 10) >= 0 && parseInt(value, 10) <= 25)
-        ) {
+        if (value === "" || !isNaN(value)) {
             setKeyB(value);
+        }
+    };
+
+    const handleKeyCaesarChange = (e) => {
+        const value = e.target.value;
+        if (value === "" || !isNaN(value)) {
+            setKeyCaesar(value);
+        }
+    };
+
+    const handleKeyVigenèreChange = (e) => {
+        const value = e.target.value;
+        
+        // Regular expression to allow English, Turkish, and Arabic letters, and spaces
+        const regex = /^[a-zA-ZÇçĞğİıÖöŞşÜü\u0400-\u04FF\u0600-\u06FF\s]*$/;
+
+        if (regex.test(value)) {
+            // Convert the input text to capital letters
+            const capitalText = value.toUpperCase();
+            setKeyVigenère(capitalText);
+        } else {
+            showAlert(
+                "Please enter text with letters only, no numbers or special characters."
+            );
         }
     };
 
@@ -92,52 +134,93 @@ export const useDecryptionEncryptionLogic = () => {
         setIsEncrypt(!isEncrypt);
     };
 
+    const isValidLanguageText = (text, language) => {
+        const alphabet = getAlphabet(language);
+        const regexLanguage = new RegExp(`^[${alphabet}\\s]*$`);
+        return regexLanguage.test(text);
+    };
+
     const handleProcess = () => {
         if (
             !text ||
-            (cipher === "affine" && (!keyA || !keyB)) ||
-            (cipher === "caesar" && !keyA)
+            (cipher === "Affine" && (!keyAffineA || !keyAffineB)) ||
+            (cipher === "Caesar" && !keyCaesar )||
+            (cipher==="Vigenère" && !keyVigenère)
         ) {
             showAlert("Please provide all required inputs.");
             return;
         }
+        if (
+            !text ||
+            (cipher === "Affine" && !isValidLanguageText(text, language)) ||
+            (cipher === "Caesar" && !isValidLanguageText(text, language)) ||
+            (cipher==="Vigenère" && !isValidLanguageText(text, language) )||
+            (cipher === "Atbash" && !isValidLanguageText(text, language))
+        ) {
+            showAlert("Please select a correct language input.");
+            return;
+        }
 
-        if (cipher === "atbash") {
-            const processedText = AtbashCipher(text);
+
+        if (cipher === "Atbash") {
+            const processedText = AtbashCipher(text, language);
             setOutput(processedText);
-        } else if (cipher === "caesar") {
-            // Converting the value of keyA to an integer using the parseInt function.
-            const shiftValue = parseInt(keyA, 10);
-            const processedText = CaesarCipher(text, shiftValue, isEncrypt);
+
+        } else if (cipher === "Caesar") {
+            // Converting the value of keyAffineA to an integer using the parseInt function.
+            const convertedKeyCaesar = keyCaesar % getAlphabet(language).length;
+            const shiftValue = parseInt(convertedKeyCaesar, 10);
+            const processedText = CaesarCipher(text, shiftValue, isEncrypt, language);
             setOutput(processedText);
-        } else if (cipher === "affine") {
-            // Converting the value of keyA, keyB to an integer using the parseInt function.
-            const shiftValueA = parseInt(keyA, 10);
-            const shiftValueB = parseInt(keyB, 10);
+
+        } else if (cipher === "Affine") {
+            // Converting the value of keyAffineA, keyAffineB to an integer using the parseInt function.
+            const convertedKeyB = keyAffineB % getAlphabet(language).length;
+            const shiftValueA = parseInt(keyAffineA, 10);
+            const shiftValueB = parseInt(convertedKeyB, 10);
             const processedText = AffineCipher(
                 text,
                 shiftValueA,
                 shiftValueB,
-                isEncrypt
+                isEncrypt,
+                language
             );
             setOutput(processedText);
+
+        }else if (cipher === "Vigenère") {
+            // Converting the value of keyAffineA, keyAffineB to an integer using the parseInt function.
+            const shiftValue = keyVigenère
+            const processedText = VigenereCipher(
+                text,
+                shiftValue,
+                isEncrypt,
+                language
+            );
+            setOutput(processedText);
+
         } else {
             // Handle other ciphers here if needed
             showAlert("Selected cipher is not supported yet.");
         }
     };
-
+    
     return {
         cipher,
+        language,
         text,
-        keyA,
-        keyB,
+        keyAffineA,
+        keyAffineB,
+        keyCaesar,
+        keyVigenère,
         output,
         isEncrypt,
         customAlert,
         handleCipherChange,
+        handleLanguageChange,
         handleTextChange,
         handleKeyAChange,
+        handleKeyCaesarChange,
+        handleKeyVigenèreChange,
         handleKeyBChange,
         handleModeChange,
         handleProcess,

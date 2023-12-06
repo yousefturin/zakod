@@ -158,6 +158,9 @@ input[type="radio"]::-ms-check {
   justify-content: flex-start;
   align-items: center;
 }
+
+
+
 .custom-alert {
   position: fixed;
   bottom: 0;
