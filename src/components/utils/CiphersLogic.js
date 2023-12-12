@@ -11,12 +11,12 @@ export const getAlphabet = (language) => {
         case 'Turkish':
             return 'ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ';
         case 'Arabic':
-            return 'ابتثجحخدذرزسشصضطظعغفقكلمنهوي';
+            return 'اأبتثجحخدذرزسشصضطظعغفقكلمنهويى';
         case 'Russian':
             return 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ';
         default:
             // Default to English alphabet
-            return 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            return -1;
     }
 
 };
@@ -64,6 +64,7 @@ export const AtbashCipher = (inputText, language) => {
  * @param {string} inputText - The text to be encrypted or decrypted.
  * @param {number} shiftA - The number of positions to shift the characters.
  * @param {boolean} isEncrypt - A flag indicating whether to encrypt (true) or decrypt (false).
+ * @param {string} language - The language for the alphabet (e.g., 'english', 'turkish').
  * @returns {string} - The processed text.
  */
 export const CaesarCipher = (inputText, shiftA, isEncrypt, language) => {
@@ -107,6 +108,7 @@ export const CaesarCipher = (inputText, shiftA, isEncrypt, language) => {
  * @param {number} shiftA - The first part of the key for the Affine cipher.
  * @param {number} shiftB - The second part of the key for the Affine cipher.
  * @param {boolean} isEncrypt - A flag indicating whether to encrypt (true) or decrypt (false).
+ * @param {string} language - The language for the alphabet (e.g., 'english', 'turkish').
  * @returns {string} - The processed text.
  */
 export const AffineCipher = (inputText, shiftA, shiftB, isEncrypt, language) => {
@@ -163,6 +165,7 @@ export const AffineCipher = (inputText, shiftA, shiftB, isEncrypt, language) => 
  * @param {string} inputText - The text to be encrypted or decrypted.
  * @param {string} key - The key for the Vigenère cipher.
  * @param {boolean} isEncrypt - A flag indicating whether to encrypt (true) or decrypt (false).
+ * @param {string} language - The language for the alphabet (e.g., 'english', 'turkish').
  * @returns {string} - The processed text.
  */
 export const VigenereCipher = (inputText, key, isEncrypt, language) => {
@@ -199,7 +202,7 @@ export const VigenereCipher = (inputText, key, isEncrypt, language) => {
     // Map each character of the input text through the transformCharacter function
     // and then join the resulting array to form the processed text
     return inputText.split('').map((char) => {
-        if (/^[a-zA-ZÇçĞğİıÖöŞşÜü\u0600-\u06FF\s]*$/.test(char)) {
+        if (/^[a-zA-ZÇçĞğİıÖöŞşÜü\u0400-\u04FF\u0600-\u06FF\s]*$/.test(char)) {
             const transformedChar = transformCharacter(char, keyIndex);
             keyIndex++;
             return transformedChar;

@@ -104,7 +104,7 @@ function DecryptionEncryption() {
                                 (charCode < 65 ||
                                     (charCode > 90 && charCode < 97) ||
                                     charCode > 122) &&
-                                !e.key.match(/[\u0400-\u04FF\u0600-\u06FF\s]/) // Allow Arabic characters
+                                !e.key.match(/^[a-zA-ZÇçĞğİıÖöŞşÜü\u0400-\u04FF\u0600-\u06FF\s]*$/) // Allow Arabic, Russian, Turkish and English characters
                             ) {
                                 e.preventDefault();
                             }

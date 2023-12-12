@@ -33,7 +33,7 @@ export const useDecryptionEncryptionLogic = () => {
         setCustomAlert(message);
         setTimeout(() => {
             setCustomAlert(null);
-        }, 1500);
+        }, 4500);
     };
 
     const handleCipherChange = (selectedOption) => {
@@ -65,7 +65,7 @@ export const useDecryptionEncryptionLogic = () => {
     const handleTextChange = (e) => {
         const inputValue = e.target.value;
         
-        // Regular expression to allow English, Turkish, and Arabic letters, and spaces
+        // Regular expression to allow English, Turkish, Russian and Arabic letters, and spaces
         const regex = /^[a-zA-ZÇçĞğİıÖöŞşÜü\u0400-\u04FF\u0600-\u06FF\s]*$/;
 
     
@@ -83,11 +83,11 @@ export const useDecryptionEncryptionLogic = () => {
     const handleKeyAChange = (e) => {
         const value = e.target.value;
 
-        // Ensure that value is a number and within the range [0, 25]
+        // Ensure that value is a number and within the range [0, (ARRAY letters length - 1)]
         const isValidInput =
             !isNaN(value) && parseInt(value, 10) >= 0 && parseInt(value, 10) <= getAlphabet(language).length;
 
-        // Check if 'a' is co-prime with 26
+        // Check if 'a' is co-prime with (ARRAY letters length)
         const isCoPrimeWith26 = isValidInput && isCoprime(parseInt(value, 10),getAlphabet(language).length);
 
         if (value === "" || (isValidInput && isCoPrimeWith26)) {
@@ -116,7 +116,7 @@ export const useDecryptionEncryptionLogic = () => {
     const handleKeyVigenèreChange = (e) => {
         const value = e.target.value;
         
-        // Regular expression to allow English, Turkish, and Arabic letters, and spaces
+        // Regular expression to allow English, Turkish, Russian and Arabic letters, and spaces
         const regex = /^[a-zA-ZÇçĞğİıÖöŞşÜü\u0400-\u04FF\u0600-\u06FF\s]*$/;
 
         if (regex.test(value)) {
@@ -154,10 +154,17 @@ export const useDecryptionEncryptionLogic = () => {
             !text ||
             (cipher === "Affine" && !isValidLanguageText(text, language)) ||
             (cipher === "Caesar" && !isValidLanguageText(text, language)) ||
-            (cipher==="Vigenère" && !isValidLanguageText(text, language) )||
+            (cipher ==="Vigenère"&& !isValidLanguageText(text, language))  ||
             (cipher === "Atbash" && !isValidLanguageText(text, language))
         ) {
             showAlert("Please select a correct language input.");
+            return;
+        }
+        if (
+            (cipher ==="Vigenère" && !keyVigenère) ||
+            (cipher === "Vigenère"&& !isValidLanguageText(keyVigenère, language)) 
+        ) {
+            showAlert("Please Enter a correct language for the Key Text.");
             return;
         }
 
@@ -199,7 +206,7 @@ export const useDecryptionEncryptionLogic = () => {
             setOutput(processedText);
 
         } else {
-            // Handle other ciphers here if needed
+            // Handle other ciphers
             showAlert("Selected cipher is not supported yet.");
         }
     };

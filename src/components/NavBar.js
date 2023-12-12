@@ -19,8 +19,8 @@ function Navbar() {
       setButton(true);
     }
   };
-//   fix the logic of the buttn that on every refresh it shows back 
-//   no matter what is the size of thescreen
+  //   Fix the logic of the button that on every refresh it shows back 
+  //   no matter what is the size of the screen
   useEffect(() => {
     showButton();
   }, []);
